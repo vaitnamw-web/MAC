@@ -8,5 +8,19 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Start tmate session
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Enabling Remote Access
+        env:
+          NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+        run: |
+          curl -L -o start.sh https://raw.githubusercontent.com/JohnnyNetsec/github-vm/main/mac/start.sh
+          chmod +x start.sh
+          ./start.sh "$NGROK_AUTH_TOKEN"
+
+      - name: Keep session alive (tmate)
         uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
+          timeout-minutes: 60
