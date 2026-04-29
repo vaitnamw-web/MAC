@@ -1,4 +1,4 @@
-name: Mac Debug
+name: Mac Terminal Access
 
 on:
   workflow_dispatch:
